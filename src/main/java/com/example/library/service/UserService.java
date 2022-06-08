@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.model.Address;
 import com.example.library.model.User;
 import com.example.library.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,5 @@ public class UserService {
     public User add(User user) {
         return userRepository.saveAndFlush(user);
     }
-
 
 }

@@ -5,22 +5,17 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "addresses")
 @Data
-public class User {
-
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    private String district;
 
+    private String city;
 
-    @OneToOne
-    private Address address;
-/*
-    @ManyToMany
-    private List<Book> bookList;
-*/
-
+    @OneToOne(mappedBy = "address")
+    private User user;
 }
