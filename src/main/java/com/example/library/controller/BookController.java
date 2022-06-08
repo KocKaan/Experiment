@@ -25,3 +25,4 @@ public class BookController {
     public Book add(@RequestBody Book book){
         return bookService.add(book);
     }
+}
