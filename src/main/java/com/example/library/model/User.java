@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -19,8 +20,9 @@ public class User {
 
     private String name;
 
+    private Date date;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private Address address;
 /*
     @ManyToMany

@@ -23,4 +23,10 @@ public class UserController {
     public User add(@RequestBody User user) {
         return userService.add(user);
     }
+
+    @PostMapping("/edit/{id}")
+    public User editUser(@RequestBody User editUser, @PathVariable Long id){
+        return userService.updateUserById(editUser,id);
+
+    }
 }
