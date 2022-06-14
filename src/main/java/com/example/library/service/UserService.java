@@ -1,6 +1,8 @@
 package com.example.library.service;
 
+import com.example.library.dto.mapper;
 import com.example.library.dto.requestDto.UserRequestDto;
+import com.example.library.dto.responseDto.UserResponseDto;
 import com.example.library.exception.UserNotFoundException;
 import com.example.library.model.Address;
 import com.example.library.model.User;
@@ -26,9 +28,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User add(UserRequestDto userRequestDto) {
+    public UserResponseDto add(UserRequestDto userRequestDto) {
 
-        User  user= new User();
+        User user= new User();
         user.setName(userRequestDto.getName());
 
 
@@ -38,7 +40,9 @@ public class UserService {
             Address addressById= addressService.getAddressById(userRequestDto.getAddressId());
             user.setAddress(addressById);
         }
-        return userRepository.saveAndFlush(user);
+        User resultUser= userRepository.saveAndFlush(user);
+
+        return mapper.userToUserResponseDto(resultUser);
     }
 
 
@@ -47,19 +51,27 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User id not found: "+userId));
     }
 
-    public User updateUserById(User userRequest,Long userId) throws UserNotFoundException{
+    public UserResponseDto updateUserById(UserRequestDto userRequest,Long userId) throws UserNotFoundException{
         User userToEdit = getUserById(userId);
 
         userToEdit.setName(userRequest.getName());
-        userToEdit.setDate(userRequest.getDate());
 
-        if(userRequest.getAddress() != null) {
+        if(userRequest.getAddressId() != null) {
 
-            Address address= addressService.getAddressById(userRequest.getAddress().getId());
+            Address address= addressService.getAddressById(userRequest.getAddressId());
             userToEdit.setAddress(address);
         }
-        return userToEdit;
 
+        User updatedUser= userRepository.saveAndFlush(userToEdit);
+        return mapper.userToUserResponseDto(updatedUser);
+    }
+
+    public UserResponseDto updateUserName(Long userId, String firstName){
+        User userToEdit = getUserById(userId);
+        userToEdit.setName(firstName);
+
+        User updatedUser= userRepository.saveAndFlush(userToEdit);
+        return mapper.userToUserResponseDto(updatedUser);
     }
 
     public List<User> findAllByAddress_City(String cityName){

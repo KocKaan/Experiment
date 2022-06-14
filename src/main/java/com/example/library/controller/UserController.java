@@ -1,9 +1,12 @@
 package com.example.library.controller;
 
 import com.example.library.dto.requestDto.UserRequestDto;
+import com.example.library.dto.responseDto.UserResponseDto;
 import com.example.library.model.User;
 import com.example.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,14 +23,24 @@ public class UserController {
         return userService.findAll();
     }
 
-    @PostMapping
-    public User add(@RequestBody UserRequestDto userRequestDto) {
-        return userService.add(userRequestDto);
+    @PostMapping("/add")
+    public ResponseEntity<UserResponseDto> add(@RequestBody UserRequestDto userRequestDto) {
+        UserResponseDto userResponseDto = userService.add(userRequestDto);
+
+        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
-    @PostMapping("/edit/{id}")
-    public User editUser(@RequestBody User editUser, @PathVariable Long id){
-        return userService.updateUserById(editUser,id);
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<UserResponseDto> editUser(@RequestBody UserRequestDto editUser, @PathVariable Long id){
+        UserResponseDto userResponseDto= userService.updateUserById(editUser,id);
 
+        return new ResponseEntity<>(userResponseDto,HttpStatus.OK);
+    }
+
+    @PatchMapping("/edit/{id}/{name}")
+    public ResponseEntity<UserResponseDto> editUserName(@PathVariable Long id, @PathVariable String name){
+        UserResponseDto userResponseDto= userService.updateUserName(id, name);
+
+        return new ResponseEntity<>(userResponseDto,HttpStatus.OK);
     }
 }
