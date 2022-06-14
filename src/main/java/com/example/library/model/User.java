@@ -20,6 +20,8 @@ public class User {
 
     private String name;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
     private Date date;
 
     @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
@@ -28,5 +30,9 @@ public class User {
     @ManyToMany
     private List<Book> bookList;
 */
+    @PrePersist
+    private void onCreate() {
+       date = new Date();
+}
 
 }

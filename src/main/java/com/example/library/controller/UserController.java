@@ -1,5 +1,6 @@
 package com.example.library.controller;
 
+import com.example.library.dto.requestDto.UserRequestDto;
 import com.example.library.model.User;
 import com.example.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class UserController {
     }
 
     @PostMapping
-    public User add(@RequestBody User user) {
-        return userService.add(user);
+    public User add(@RequestBody UserRequestDto userRequestDto) {
+        return userService.add(userRequestDto);
     }
 
     @PostMapping("/edit/{id}")

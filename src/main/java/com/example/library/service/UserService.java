@@ -1,5 +1,6 @@
 package com.example.library.service;
 
+import com.example.library.dto.requestDto.UserRequestDto;
 import com.example.library.exception.UserNotFoundException;
 import com.example.library.model.Address;
 import com.example.library.model.User;
@@ -25,9 +26,18 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User add(User user) {
-        Address addressById= addressService.getAddressById(user.getId());
+    public User add(UserRequestDto userRequestDto) {
 
+        User  user= new User();
+        user.setName(userRequestDto.getName());
+
+
+        if(userRequestDto.getAddressId() == null){
+            throw new IllegalArgumentException("you need an id an on existing address ");
+        }else{
+            Address addressById= addressService.getAddressById(userRequestDto.getAddressId());
+            user.setAddress(addressById);
+        }
         return userRepository.saveAndFlush(user);
     }
 
