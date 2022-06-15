@@ -1,9 +1,11 @@
 package com.example.library.dto.responseDto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
+@Builder
 @Data
 public class UserResponseDto {
     private Long id;

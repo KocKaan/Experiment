@@ -1,13 +1,10 @@
 package com.example.library.service;
 
-import com.example.library.dto.mapper;
 import com.example.library.dto.requestDto.UserRequestDto;
-import com.example.library.dto.responseDto.UserResponseDto;
 import com.example.library.exception.UserNotFoundException;
 import com.example.library.model.Address;
 import com.example.library.model.User;
 import com.example.library.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +25,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public UserResponseDto add(UserRequestDto userRequestDto) {
+    public User add(UserRequestDto userRequestDto) {
 
         User user= new User();
         user.setName(userRequestDto.getName());
@@ -42,7 +39,7 @@ public class UserService {
         }
         User resultUser= userRepository.saveAndFlush(user);
 
-        return mapper.userToUserResponseDto(resultUser);
+        return resultUser;
     }
 
 
@@ -51,7 +48,7 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User id not found: "+userId));
     }
 
-    public UserResponseDto updateUserById(UserRequestDto userRequest,Long userId) throws UserNotFoundException{
+    public User updateUserById(UserRequestDto userRequest,Long userId) throws UserNotFoundException{
         User userToEdit = getUserById(userId);
 
         userToEdit.setName(userRequest.getName());
@@ -63,15 +60,15 @@ public class UserService {
         }
 
         User updatedUser= userRepository.saveAndFlush(userToEdit);
-        return mapper.userToUserResponseDto(updatedUser);
+        return updatedUser;
     }
 
-    public UserResponseDto updateUserName(Long userId, String firstName){
+    public User updateUserName(Long userId, String firstName){
         User userToEdit = getUserById(userId);
         userToEdit.setName(firstName);
 
         User updatedUser= userRepository.saveAndFlush(userToEdit);
-        return mapper.userToUserResponseDto(updatedUser);
+        return updatedUser;
     }
 
     public List<User> findAllByAddress_City(String cityName){

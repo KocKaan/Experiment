@@ -1,10 +1,7 @@
 package com.example.library.service;
 
-import com.example.library.model.Book;
 import com.example.library.model.Publisher;
-import com.example.library.repository.BookRepository;
 import com.example.library.repository.PublisherRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

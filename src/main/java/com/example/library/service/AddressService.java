@@ -3,7 +3,6 @@ package com.example.library.service;
 import com.example.library.exception.AddressNotFoundException;
 import com.example.library.model.Address;
 import com.example.library.repository.AddressRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

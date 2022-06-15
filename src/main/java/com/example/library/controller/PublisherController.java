@@ -12,8 +12,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/publishers")
 public class PublisherController {
-    @Autowired
+
     private PublisherService publisherService;
+    public PublisherController(PublisherService publisherService) {
+        this.publisherService = publisherService;
+    }
 
     @GetMapping
     public List<Publisher> findAll(){

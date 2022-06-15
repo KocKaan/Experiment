@@ -2,7 +2,6 @@ package com.example.library.controller;
 
 import com.example.library.model.Address;
 import com.example.library.service.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +10,10 @@ import java.util.List;
 @RequestMapping("/address")
 public class AddressController {
 
-    @Autowired
     private AddressService addressService;
+    public AddressController(AddressService addressService) {
+        this.addressService = addressService;
+    }
 
     @GetMapping
     public List<Address> findAll(){
